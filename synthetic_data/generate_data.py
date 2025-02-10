@@ -105,12 +105,13 @@ with rep.new_layer():
     rep.randomizer.register(sphere_lights)
     # trigger on frame for an interval
     with rep.trigger.on_frame(num_frames=100):
-        for n, f in FRUIT_PROPS.items():
-            random_props(f, n)
+        # for n, f in FRUIT_PROPS.items():
+        #     random_props(f, n)
         rep.randomizer.sphere_lights(5)
         with camera:
             rep.modify.pose(
-                position=rep.distribution.uniform((-3, 114, -17), (-1, 116, -15)),
+                rotation=(-90, 0, 0),
+                position=rep.distribution.uniform((100, 15, -5), (200, 25, 5)),
                 look_at=(0, 20, 0),
             )
 
