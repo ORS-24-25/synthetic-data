@@ -6,6 +6,9 @@ authors = ["sdstevenson <samirdstevenson@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
+pillow = "^11.1.0"
+numpy = "^2.2.2"
+matplotlib = "^3.10.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
