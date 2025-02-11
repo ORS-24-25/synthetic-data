@@ -17,9 +17,11 @@ with rep.new_layer():
         return lights.node
     rep.randomizer.register(sphere_lights)
 
+    # Create a camera and render product, what creates the image
     camera = rep.create.camera(
-        position=(50, 0, 2), 
-        rotation=(0, 0, 0)
+        # Dont define these if we want to move the camera
+        # position=(50, 0, 2), 
+        # rotation=(0, 0, 0)
     )
     render_product = rep.create.render_product(camera, (1024, 1024))
 
@@ -35,9 +37,14 @@ with rep.new_layer():
                 scale=rep.distribution.uniform(0.1, 2)
             )
         rep.randomizer.sphere_lights(10)
+        with camera:
+            rep.modify.pose(
+                position=rep.distribution.uniform((40, -2, 2), (50, 2, 4)),
+                look_at=(0, 0, 0)
+            )
 
     # Initialize and attach writer
     writer = rep.WriterRegistry.get("BasicWriter")
-    writer.initialize(output_dir="test1_output", rgb=True, bounding_box_2d_tight=True)
+    writer.initialize(output_dir="test2_output", rgb=True, bounding_box_2d_tight=True)
     writer.attach([render_product])
     rep.orchestrator.preview()
