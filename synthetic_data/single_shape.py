@@ -1,23 +1,29 @@
 import omni.replicator.core as rep # type: ignore
 
 with rep.new_layer():
+    # Add Default Light
+    distance_light = rep.create.light(rotation=(315,0,0), intensity=3000, light_type="distant")
 
-    camera = rep.create.camera(position=(0, 0, 1000))
+    camera = rep.create.camera(
+        position=(50, 0, 2), 
+        rotation=(0, 0, 0)
+    )
     render_product = rep.create.render_product(camera, (1024, 1024))
 
-    torus = rep.create.torus(semantics=[('class', 'torus')] , position=(0, -200 , 100))
-    sphere = rep.create.sphere(semantics=[('class', 'sphere')], position=(0, 100, 100))
-    cube = rep.create.cube(semantics=[('class', 'cube')],  position=(100, -200 , 100) )
+    torus = rep.create.torus(semantics=[('class', 'torus')] , position=(0, 0 , 0))
+    sphere = rep.create.sphere(semantics=[('class', 'sphere')], position=(0, 0, 0))
+    cube = rep.create.cube(semantics=[('class', 'cube')],  position=(0, 0, 0) )
+    plane = rep.create.plane(scale=10, visible=True)
 
-    with rep.trigger.on_frame(num_frames=10):
+    with rep.trigger.on_frame(max_execs=10):
         with rep.create.group([torus, sphere, cube]):
             rep.modify.pose(
-                position=rep.distribution.uniform((-100, -100, -100), (200, 200, 200)),
+                position=rep.distribution.uniform((-5, -5, 2), (5, 5, 2)),
                 scale=rep.distribution.uniform(0.1, 2)
             )
 
     # Initialize and attach writer
     writer = rep.WriterRegistry.get("BasicWriter")
-    writer.initialize(output_dir="_output", rgb=True, bounding_box_2d_tight=True)
+    writer.initialize(output_dir="test1_output", rgb=True, bounding_box_2d_tight=True)
     writer.attach([render_product])
     rep.orchestrator.preview()
