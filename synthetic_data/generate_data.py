@@ -33,7 +33,7 @@ import datetime
 
 now = datetime.datetime.now()
 from functools import partial
-import omni.replicator.core as rep
+import omni.replicator.core as rep # type: ignore
 
 with rep.new_layer():
     # Define paths for the character, the props, the environment and the surface where the assets will be scattered in.
